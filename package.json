@@ -1,5 +1,5 @@
 {
-  "name": "cesi-room",
+  "name": "cesi-ta-chance",
   "version": "0.0.0",
   "author": "Adrien <adrien2929@msn.com>",
   "description": "An electron-vue project",
@@ -19,7 +19,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "cesi-room",
+    "productName": "cesi-ta-chance",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "lodash": "^4.17.4",
     "nedb": "^1.8.0",
     "vue": "^2.4.2",
     "vue-electron": "^1.0.6",

@@ -33,8 +33,8 @@
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
-            <td>
+          <tr :active="props.selected" @click="props.expanded = !props.expanded">
+            <td @click="selectItem($event, props)">
               <v-checkbox
                 color="primary"
                 hide-details
@@ -43,16 +43,40 @@
             </td>
             <td>{{ props.item.firstName }}</td>
             <td class="text-xs-right">{{ props.item.lastName }}</td>
-            <td class="text-xs-right">{{ props.item.lastName }}</td>        
+            <td v-bind:class="{ sync: props.item.sync, unsync: !props.item.sync }" class="text-xs-right">
+              {{ props.item.sync ? 'Synchronisé' : 'Non synchronisé' }}
+            </td>
           </tr>
+        </template>
+        <template slot="expand" slot-scope="props">
+          <v-card>
+            <v-card-title>{{ props.item.firstName }} {{ props.item.lastName }}</v-card-title>
+            <v-card-text>
+              <contact-card :contact="props.item"></contact-card>
+            </v-card-text>
+          </v-card>
         </template>
       </v-data-table>
     </v-flex>
   </v-layout>
 </template>
 
+<style>
+  .sync {
+    color: green !important;
+  };
+
+  .unsync {
+    font-weight: bold;
+    color: red !important;
+  };
+</style>
+
 <script>
+  import ContactCard from './SyncPage/ContactCard';
+
   export default {
+    components: { ContactCard },
     data() {
       return {
         pagination: {
@@ -70,7 +94,6 @@
       };
     },
     created() {
-      console.log('yo');
       this.$db.find({}, (err, data) => {
         if (err || !data) {
           this.snack = {
@@ -79,14 +102,25 @@
             open: true,
             color: 'error',
           };
-          console.log('Errr', err);
         } else {
-          console.log('GG', data);
-          this.items = Object.values(data);
+          this.items = [...this.items, ...Object.values(data).map(val => ({ ...val, sync: false }))];
         }
         this.loading = false;
         return null;
       });
+
+      // get('/')
+      //   .then((data) => {
+      //     this.items = [...this.items, data.map(val => ({ ...val, sync: true }))];
+      //   })
+      //   .catch(() => {
+      //     this.snack = {
+      //       timeout: 6000,
+      //       text: 'Echec de la récupératin des données distantes',
+      //       open: true,
+      //       color: 'error',
+      //     };
+      //   });
     },
     methods: {
       toggleAll() {
@@ -101,6 +135,10 @@
           this.pagination.descending = false;
         }
       },
+      selectItem(evt, props) {
+        evt.stopPropagation();
+        props.selected = !props.selected;
+      },
       async sync() {
         this.submitting = true;
         this.selected = [];
@@ -109,7 +147,3 @@
     },
   };
 </script>
-
-<style scoped>
-
-</style>

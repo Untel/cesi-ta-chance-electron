@@ -1,4 +1,4 @@
-# cesi-room
+# CESI ta chance!
 
 > An electron-vue project
 

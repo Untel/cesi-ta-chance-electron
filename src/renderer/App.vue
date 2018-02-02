@@ -119,12 +119,11 @@
       items: [
         { icon: 'format_align_left', title: 'Formulaire', to: '/' },
         { icon: 'sync', title: 'Synchronisation', to: '/sync' },
-        { icon: 'settings', title: 'Settings', to: '/settings' },
+        // { icon: 'settings', title: 'Settings', to: '/settings' },
       ],
       miniVariant: false,
       right: true,
-      // rightDrawer: false,
-      title: 'Cesi ROOM',
+      title: 'CESI Ta Chance !',
     }),
   };
 </script>

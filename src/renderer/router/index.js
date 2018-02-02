@@ -18,7 +18,7 @@ export default new Router({
     {
       path: '/sync',
       name: 'sync-page',
-      component: require('@/components/DataPage').default,
+      component: require('@/components/SyncPage').default,
     },
     {
       path: '*',

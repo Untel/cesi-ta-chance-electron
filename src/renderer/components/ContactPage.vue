@@ -136,7 +136,7 @@
         </v-stepper-step>
         <v-stepper-content step="2">
           <v-layout row>
-            <v-flex>
+            <v-flex pr-3>
               <v-text-field
                 label="Quelle est votre formation actuelle ?"
                 v-model="contact.training"
@@ -144,8 +144,9 @@
             </v-flex>
             <v-flex xs2>
               <v-text-field
-                label="Année"
+                label="Année de formation"
                 type="number"
+                style="text-align: right;"
                 min="1"
                 max="9"
                 :suffix="suffix"
@@ -301,8 +302,8 @@
     mixins: [validationMixin],
     validations: {
       contact: {
-        firstName: { required, alphaNum },
-        lastName: { required, alphaNum },
+        firstName: { required },
+        lastName: { required },
         email: { required, email },
         birthdate: { required },
         postalCode: { required, alphaNum },
@@ -320,7 +321,7 @@
         phone: '',
         gender: 'M',
         training: '',
-        degree: null,
+        degree: 1,
         lastSchool: '',
         birthdate: '',
         allowContact: false,
@@ -347,7 +348,7 @@
           { header: 'Qualité sécurité et environnement' },
           {
             code: 'QSE',
-            name: 'Responsable Qualitée Sécurité Environnement',
+            name: 'Responsable Qualité Sécurité Environnement',
           },
           { header: 'Industrie' },
           {
@@ -468,14 +469,12 @@
       firstNameErrors() {
         const errors = [];
         if (!this.$v.contact.firstName.$dirty) return errors;
-        if (!this.$v.contact.firstName.alphaNum) errors.push('Votre prénom ne peut contenir des charactères alphanumérique');
         if (!this.$v.contact.firstName.required) errors.push('Le prénom est requis');
         return errors;
       },
       lastNameErrors() {
         const errors = [];
         if (!this.$v.contact.lastName.$dirty) return errors;
-        if (!this.$v.contact.lastName.alphaNum) errors.push('Votre nom ne peut contenir des charactères alphanumérique');
         if (!this.$v.contact.lastName.required) errors.push('Le nom de famille est requis');
         return errors;
       },
@@ -507,9 +506,9 @@
         return errors;
       },
       suffix() {
-        if (!this.contact.anneeFormation) return '';
-        if (parseInt(this.contact.anneeFormation, 10) === 1) return 'ère';
-        return 'ème';
+        if (!this.contact.degree) return '';
+        if (parseInt(this.contact.degree, 10) === 1) return 'ère année';
+        return 'ème année';
       },
     },
   };

@@ -37,7 +37,6 @@
                 label="E-mail"
                 v-model="contact.email"
                 :error-messages="emailErrors"
-                
                 @input="$v.contact.email.$touch()"
                 @blur="$v.contact.email.$touch()"
                 required
@@ -86,9 +85,11 @@
                 ></v-text-field>
                 <v-date-picker 
                   color="primary"
+                  first-day-of-week="1"
+                  locale="fr-FR"
                   v-model="contact.birthdate"
                   @input="formatedBirthdate = formatDate($event)"
-                  no-title scrollable actions>
+                  scrollable actions>
                   <template slot-scope="{ save, cancel }">
                     <v-card-actions>
                       <v-btn flat @click="cancel">Annuler</v-btn>
@@ -177,6 +178,7 @@
             v-model="contact.interestedBy"
             item-text="name"
             item-value="name"
+            class="cesi-list"
             multiple
             chips
             max-height="auto"
@@ -271,24 +273,28 @@
   </v-layout>
 </template>
 
-<style>
+<style lang="scss">
 
-  li.subheader {
-    margin: 5px 15px 0;
-    border-bottom: 1px solid #009c9e;
-  }
+  .menu__content.menu__content--select.menu__content--autocomplete.menuable__content__active {
+    li {
+      &.subheader {
+        margin: 5px 15px 0;
+        border-bottom: 1px solid #009c9e;
+      }
 
-  li:not(.subheader)::before {
-    content: '\2022';
-    position: absolute;
-    transform: translateY(25%);
-    color: #009c9e !important;
-    font-size: 1.75rem;
-    /* padding-left: 10px; */
-  }
+      &:not(.subheader)::before {
+        content: '\2022';
+        position: absolute;
+        transform: translateY(25%);
+        color: #009c9e !important;
+        font-size: 1.75rem;
+        /* padding-left: 10px; */
+      }
 
-  li:not(.subheader) {
-    text-indent: 20px;
+      &:not(.subheader) {
+        text-indent: 20px;
+      }
+    }
   }
 
 </style>

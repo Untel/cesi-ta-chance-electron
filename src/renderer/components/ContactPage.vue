@@ -14,7 +14,6 @@
                 label="Prénom"
                 v-model="contact.firstName"
                 :error-messages="firstNameErrors"
-                @input="$v.contact.firstName.$touch()"
                 @blur="$v.contact.firstName.$touch()"
                 required
               ></v-text-field>
@@ -24,7 +23,6 @@
                 label="Nom"
                 v-model="contact.lastName"
                 :error-messages="lastNameErrors"
-                @input="$v.contact.lastName.$touch()"
                 @blur="$v.contact.lastName.$touch()"
                 required
               ></v-text-field>
@@ -37,7 +35,6 @@
                 label="E-mail"
                 v-model="contact.email"
                 :error-messages="emailErrors"
-                @input="$v.contact.email.$touch()"
                 @blur="$v.contact.email.$touch()"
                 required
               ></v-text-field>
@@ -78,8 +75,7 @@
                   label="Date de naissance"
                   v-model="formatedBirthdate"
                   prepend-icon="event"
-                  @blur="contact.birthdate = parseDate(formatedBirthdate)"
-                  @input="$v.contact.birthdate.$touch()"
+                  @blur="contact.birthdate = parseDate(formatedBirthdate); $v.contact.birthdate.$touch()"
                   :error-messages="birthdateErrors"
                   required
                 ></v-text-field>
